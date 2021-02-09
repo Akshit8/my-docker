@@ -69,5 +69,8 @@ $ mount grep | proc
 
 ## Cgroups
 As Namespace can restrict what a process inside container can **see** from host machine, Control groups restrict what a process can **use** from a host machine. It is created using a pseudo file system that emits configuration files defining availaible resource to that process.
+- How these files look?
+- How docker does it?
+- adding process limitation into your own container/
 
 
