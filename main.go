@@ -17,6 +17,8 @@ func main() {
 		run()
 	case "child":
 		child()
+	case "command":
+		command()
 	default:
 		panic("invalid command")
 	}
@@ -65,6 +67,10 @@ func child() {
 	}
 
 	syscall.Unmount("/proc", 0)
+}
+
+func command() {
+	os.Create("my.txt")
 }
 
 func must(err error) {
