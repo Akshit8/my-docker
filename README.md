@@ -6,6 +6,11 @@ Let's understand this magic while implementing our own **docker** with few lines
 At the end of this post we'll be having a go binary that would be capable of running any valid linux command inside a isolated process(practically known as container).
 ```bash
 docker         run 	 image          <cmd> <params>
-go run main.go run {some command}    <cmd> <params>
+go run main.go run   {some command}    <cmd> <params>
 ```
 
+## Requirements
+- Go sdk(Linux)
+- Any Linux distribution
+<br>
+**Linux** is required because containers are practically a wrap around Linux technologies that we'll be looking next.
