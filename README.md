@@ -172,7 +172,13 @@ Now we are sure that our bash is running as an isolated process, let's `exit` fr
 In above execution we mounted root directory of host machine as our container's root dir. This practically gives all executables and metadata which our host machine holds. A better approach to this could be creating a pseudo root directory with stripped down executable and thus mounting is as container's root dir.
 
 ## Conclusion
+We have successfully created a go program that runs a linux executable as an isolated container with it's own hostname, own process management and pseudo `root-dir`. For creating a fully isolated and independent container similar to a docker container we'll have to touch all six namespaces, configure all Cgroups, dynamically create Chroots for every container and do layer caching which is beyond the scope of this article.<br>
+<br>
 
+I hope this article helped you understand how docker works and how it wraps cool pieces of technology that comes with linux kernel.<br>
+<br>
+
+For an in-depth understanding of *how docker works?*, I would recommend you to check **containers from scratch** by *Liz Rice*.
 
 ## Author
 **Akshit Sadana <akshitsadana@gmail.com>**
