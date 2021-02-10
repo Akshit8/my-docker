@@ -2,6 +2,8 @@
 Docker, and the containers it makes has completely changed the way of packaging applications and deploying them. It helps injecting our source code with mobility to run at scale. I use Docker for practically everthing on my laptop, creating local development environments, testing environments and using disposable containers for doing some crazy stuff and deleting them right away if things get messy😅. I am sure that everyone who has ever used Docker must be amazed that how a single command, let us create isolated and independent machines(called containers) within a few seconds. <br><br>
 Let's understand this magic while implementing our own **Docker** with a few lines of some awesome **Go** code.
 
+<img src="assets/banner.jpg">
+
 ## What we'll do?
 At the end of this post we'll be having a Go binary that would be capable of running any valid linux command/executable inside an isolated process(practically known as container).
 ```bash
