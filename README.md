@@ -186,3 +186,7 @@ For an in-depth understanding of *how docker works?*, I would recommend you to c
 
 - Github: [@Akshit8](https://github.com/Akshit8)
 - LinkedIn: [@akshitsadana](https://www.linkedin.com/in/akshit-sadana-b051ab121/)
+
+## Sources
+- **containers from scratch** by *Liz Rice*
+- **Build Your Own Container Using Less than 100 Lines of Go** by *Julian Friedman*
