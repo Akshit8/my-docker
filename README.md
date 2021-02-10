@@ -11,6 +11,5 @@ go run main.go run   {some command}    <cmd> <params>
 
 ## Requirements
 - Go sdk(Linux)
-- Any Linux distribution
-<br>
+- Any Linux distribution<br>
 **Linux** is required because containers are practically a wrap around Linux technologies that we'll be looking next.
