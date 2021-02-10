@@ -10,6 +10,13 @@ go run main.go run   {some command}    <cmd> <params>
 ```
 
 ## Requirements
-- Go sdk(Linux)
-- Any Linux distribution<br>
+- **Go sdk**(Linux)
+- Any **Linux** distribution
+- **Docker** for linux<br><br>
 **Linux** is required because containers are practically a wrap around Linux technologies that we'll be looking next.
+
+## Some Linux technologies
+- **Namespaces** - what an isolated process can see is defined and controlled by namespaces. It provides isolation by proving process it's own pseudo environment.
+- **Chroots** - it control root filesystem for each process.
+- **Cgroups** - what an isloted process can use as resource from host machine is enforced by cgroups.
+
