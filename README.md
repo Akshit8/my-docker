@@ -2,8 +2,8 @@
 
 <img src="assets/banner.jpg">
 
-Docker, and the containers it makes has completely changed the way of packaging applications and deploying them. It helps injecting our source code with mobility to run at scale. I use Docker for practically everthing on my laptop, creating local development environments, testing environments and using disposable containers for doing some crazy stuff and deleting them right away if things get messy😅. I am sure that everyone who has ever used Docker must be amazed that how a single command, let us create isolated and independent machines(called containers) within a few seconds. <br><br>
-Let's understand this magic while implementing our own **Docker** with a few lines of some awesome **Go** code.
+Docker, and the containers it makes has completely changed the way of packaging applications and deploying them. It injects our source code with mobility enabling them to run at scale. I use Docker for practically everything on my laptop, creating local development environments, testing environments and using disposable containers for doing some crazy stuff and deleting them right away if things get messy😅. I am sure that everyone who has ever used Docker must be amazed that how a single `docker-run` command, let us create isolated and independent machines(called containers) within a few seconds. <br><br>
+Let's understand this magic while implementing our own **Docker** with a few lines **Go** code.
 
 ## What we'll do?
 At the end of this post we'll be having a Go binary that would be capable of running any valid linux command/executable inside an isolated process(practically known as container).
@@ -13,15 +13,15 @@ go run main.go run   {some command}     <cmd> <params>
 ```
 
 ## Requirements
-- **Go sdk**(Linux)
+- **Go SDK**(Linux)
 - Any **Linux** distribution
-- **Docker** for linux<br>
-Linux is required because containers are practically a wrap around Linux technologies that we'll be exploring next.
+- **Docker** for Linux<br>
+Linux is required because containers are practically a wrap around some awesome Linux technologies that we'll be exploring next.
 
 ## Some Linux technologies
-- **Namespaces** - what an isolated process can see is defined and controlled by namespaces. It creates isolation by providing each process it's own pseudo environment.
+- **Namespaces** - what an isolated process can see is defined and controlled by namespaces. It creates isolation by providing each process its own pseudo environment.
 - **Chroots** - it control root filesystem for each process.
-- **Cgroups** - what an isloted process can use as resource from host machine is enforced by cgroups.
+- **Cgroups** - what an isloted process can use as resource from host machine is enforced by cgroups(control groups).
 
 ## A bit about Namespaces
 Namespaces provide the isolation needed to run multiple containers on one machine while giving each what appears like it’s own environment. We have following 6 namespaces thus providing different levels and kinds of isolation.
@@ -39,7 +39,7 @@ We'll create an ubuntu docker container passing `/bin/bash` as entrypoint. Use t
 ```bash
 docker run -it --rm ubuntu /bin/bash
 ```
-We'll run a few Linux commands inside our container(ubuntu 20.04) and host machine(ubuntu 20.04) and observer their behaviour inside both environments:
+We'll run a few Linux commands inside container(ubuntu 20.04) and host machine(ubuntu 20.04) and observer their behaviour inside both environments:
 
 - **hostname** - return name of the host inside which bash is running.
 - **ps** - return list of active process running inside the environment.
@@ -56,7 +56,7 @@ We can see that, when we run same commands in docker container and our host mach
 
 ## Let's dive deep
 We have got a taste of a how these containers function. It's time to open our editor and write some go code to achieve something similar that docker does.<br><br>
-Create a `main.go` file with main package and start adding the following components. Do read the comments mentioned in snippet for understanding significance of each line.
+Create a `main.go` file with main package and start adding the following components. Do read the comments mentioned in these code snippet for a better understanding.
 
 - **command switch**
 ```go
@@ -150,11 +150,11 @@ func must(err error) {
 The `must()` is a simple error wrapper that panics if any system call invoked inside child function fails.
 
 ## Let's create some containers
-Now that we have a mini docker program that can actually create isolated and independent containers on your host machine. Let use our powerful tool.<br>
+Now that we have a mini docker program that can actually create isolated and independent containers on our host machine. Let's put it to some use!<br>
 <br>
 The command that we would be running inside our container is `/bin/bash`, that will start a new bash program inside our container.<br>
 <br>
-Run following snippet to create the container.
+Run following snippet to run the binary that will create the container.
 ```bash
 go run main.go run /bin/bash
 ```
@@ -164,7 +164,7 @@ When we run the above command passing `/bin/bash` as argument following changes 
 
 - a new container is created running a bash process in isolation to the system.
 - `Running [/bin/bash] as 279518` means our bash process running in the container has a **pid** of 279518 on host, while `Running [/bin/bash] as 1` is the **pid** of the same process inside our container.
-- both `root@maverick` and hostname command tells us that hostname of our container is maverick, that is passed as *systemcall* by our Go program.
+- both `root@maverick` and hostname command tells us that hostname of our container is maverick, that is passed as *system call* by our Go program.
 - running `ps` return only the process running inside our container and has no information about other system processes.
 - since we mounted the `root dir` of our host machine as `Chroot` of our container, upon running `ls` we can see all those root files.
 
@@ -176,7 +176,7 @@ Now we are sure that our bash is running as an isolated process, let's `exit` fr
 In above execution we mounted root directory of host machine as our container's `root dir`. This practically gives all executables and metadata which our host machine holds, thus creating a vulnerability. A better approach to this, could be creating a pseudo root directory with stripped down executable and thus mounting is as container's `root dir`.
 
 ## Conclusion
-We have successfully created a Go program that runs a Linux executable as an isolated container with it's own hostname, own process management and pseudo `root-dir`. For creating a fully isolated and independent container similar to a Docker container we'll have to touch all six namespaces, configure all Cgroups, dynamically create Chroots for every container and do layer caching which is beyond the scope of this article.<br>
+We have successfully created a **Go** program that runs a **Linux executable** as an isolated container with its own hostname, own process management and pseudo `root-dir`. For creating a fully isolated and independent container similar to a Docker container we'll have to touch all six namespaces, configure all Cgroups, dynamically create Chroots for every container and do layer caching(which makes docker awesome to use 😀)) is beyond the scope of this article.<br>
 <br>
 
 I hope this article helped you understand how docker works and how it wraps cool pieces of technology that comes with linux kernel.<br>
