@@ -16,7 +16,21 @@ go run main.go run   {some command}    <cmd> <params>
 **Linux** is required because containers are practically a wrap around Linux technologies that we'll be looking next.
 
 ## Some Linux technologies
-- **Namespaces** - what an isolated process can see is defined and controlled by namespaces. It provides isolation by proving process it's own pseudo environment.
+- **Namespaces** - what an isolated process can see is defined and controlled by namespaces. It creates isolation by providing each process it's own pseudo environment.
 - **Chroots** - it control root filesystem for each process.
 - **Cgroups** - what an isloted process can use as resource from host machine is enforced by cgroups.
+
+## Container v/s Host
+Enough with theory and definitions, now let's see how a container is different from host machine.<br><br>
+We'll create a ubuntu docker container passing `/bin/bash` as entrypoint. Use the following snippet.
+```bash
+docker run -it --rm ubuntu /bin/bash
+```
+We'll run a few commands inside both our container(ubuntu 20.04) and host machine(ubuntu 20.04) and observer their behaviour inside both environments:
+- **hostname** - return name of the host inside which bash is running.
+- **ps** - return list of active process running inside the environment.<br>
+**container**
+<img src="assets/container.png">
+**host**
+<img src="assets/host.png">
 
