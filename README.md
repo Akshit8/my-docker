@@ -103,7 +103,7 @@ func child() {
 	// sets hostname for newly created namespace
 	must(syscall.Sethostname([]byte("maverick")))
     // setting root director for the container
-	must(syscall.Chroot("/sample-root"))
+	must(syscall.Chroot("/"))
     // making "/" as default dir
 	must(syscall.Chdir("/"))
     // mounting proc dir to see the process running inside container
@@ -137,5 +137,13 @@ func must(err error) {
 The `must()` is a simple error wrapper that panics if any system call invoked inside child function fails.
 
 ## Let's create some containers
-
+Now we have a mini docker program that can actually create isolated and independent containers on your host machine. Let's fire up our powerful code.<br>
+<br>
+The command that we would be running inside our container is `/bin/bash`, that will start a new bash program inside our container.<br>
+<br>
+Run following snippet to create the container.
+```bash
+go run main.go run /bin/bash
+```
+<img src="assets/execute.png">
 

@@ -59,9 +59,9 @@ func child() {
 	fmt.Printf("Running %v as %d\n", os.Args[2:], os.Getpid())
 	// sets hostname for newly created namespace
 	must(syscall.Sethostname([]byte("maverick")))
-	must(syscall.Chroot("/sample-root"))
+	must(syscall.Chroot("/home/akshit/sample-root"))
 	must(syscall.Chdir("/"))
-	must(syscall.Mount("proc", "proc", "proc", 0, ""))
+	must(syscall.Mount("/proc", "/proc", "/proc", 0, ""))
 
 	cmd := exec.Command(os.Args[2], os.Args[3:]...)
 	cmd.Stdin = os.Stdin
