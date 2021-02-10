@@ -57,28 +57,28 @@ func run() {
 
 func child() {
 	fmt.Printf("Running %v as %d\n", os.Args[2:], os.Getpid())
-    // below are some system calls that set some container properties
+	// below are some system calls that set some container properties
 	// sets hostname for newly created namespace
 	must(syscall.Sethostname([]byte("maverick")))
-    // setting root director for the container
+	// setting root director for the container
 	must(syscall.Chroot("/"))
-    // making "/" as default dir
+	// making "/" as default dir
 	must(syscall.Chdir("/"))
-    // mounting proc dir to see the process running inside container
+	// mounting proc dir to see the process running inside container
 	must(syscall.Mount("proc", "proc", "proc", 0, ""))
 
-    // below line finally executes the user-command inside our own created container!
+	// below line finally executes the user-command inside our own created container!
 	cmd := exec.Command(os.Args[2], os.Args[3:]...)
-    // attatching os-std process to our cmd-std process
+	// attatching os-std process to our cmd-std process
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-    // running the command and catching error
+	// running the command and catching error
 	if err := cmd.Run(); err != nil {
 		log.Fatal("Error: ", err)
 	}
-    // unmount the proc after command is finished
+	// unmount the proc after command is finished
 	syscall.Unmount("/proc", 0)
 }
 
