@@ -13,7 +13,7 @@ go run main.go run   {some command}    <cmd> <params>
 - **Go sdk**(Linux)
 - Any **Linux** distribution
 - **Docker** for linux<br><br>
-**Linux** is required because containers are practically a wrap around Linux technologies that we'll be looking next.
+**Linux** is required because containers are practically a wrap around Linux technologies that we'll be exploring next.
 
 ## Some Linux technologies
 - **Namespaces** - what an isolated process can see is defined and controlled by namespaces. It creates isolation by providing each process it's own pseudo environment.
@@ -27,10 +27,37 @@ We'll create a ubuntu docker container passing `/bin/bash` as entrypoint. Use th
 docker run -it --rm ubuntu /bin/bash
 ```
 We'll run a few commands inside both our container(ubuntu 20.04) and host machine(ubuntu 20.04) and observer their behaviour inside both environments:
+
 - **hostname** - return name of the host inside which bash is running.
-- **ps** - return list of active process running inside the environment.<br>
+- **ps** - return list of active process running inside the environment.
+
 **container**
 <img src="assets/container.png">
+
 **host**
 <img src="assets/host.png">
+
+We can see when we run same commands in docker container and our host machine we get different results.
+- Container is assigned a hostname from docker(container ID), while our system have a completely different hostname.
+- Lots of process are running inside our host but our container is only aware of process running inside it, thus providing isolation.
+
+## Let's dive deep
+we have got a taste of a how containers function. It's time to open our editor and write some go code to do something similar that docker does.<br>
+Create a `main.go` file with main package.
+
+- **creating command switch**
+```go
+func main() {
+	switch os.Args[1] {
+	case "run":
+		run()
+	case "child":
+		child()
+	default:
+		panic("invalid command")
+	}
+}
+```
+the command switch picks the command-line argument passed, and runs the function mapped to that argument
+
 
