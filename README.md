@@ -20,6 +20,15 @@ go run main.go run   {some command}    <cmd> <params>
 - **Chroots** - it control root filesystem for each process.
 - **Cgroups** - what an isloted process can use as resource from host machine is enforced by cgroups.
 
+## A bit about Namespaces
+Namespaces provide the isolation needed to run multiple containers on one machine while giving each what appears like it’s own environment. We have following 6 namespaces thus providing different level and kind of isolation.
+- Unix Timesharing System
+- Process IDs
+- Mounts
+- Networks
+- User IDs
+- InterProcess Communication
+
 ## Container v/s Host
 Enough with theory and definitions, now let's see how a container is different from host machine.<br><br>
 We'll create a ubuntu docker container passing `/bin/bash` as entrypoint. Use the following snippet.
@@ -147,3 +156,26 @@ go run main.go run /bin/bash
 ```
 <img src="assets/execute.png">
 
+When we run the above command passing `/bin/bash` as argument following thing happens<br>
+
+- a new container is created with a new bash process that is started inside the container
+- `Running [/bin/bash] as 279518` means our bash process running in the container has a **pid** of 279518 while `Running [/bin/bash] as 1` is the **pid** of the same process inside our container.
+- both `root@maverick` and hostname tells that hostname of our container is maverick, that is passed as systemcall by our go program.
+- running `ps` return only the process running inside our container and has no information about other system processes.
+- since we mounted the `root dir` of our host machine as `chroot` of our container, upon running `ls` we can see all those root files.
+
+Now we are sure that our bash is running as an isolated process, let's `exit` from it and observe come changes.<br>
+- upon exit we kill our container and return back to host machine
+- hostname and ps return different metrics and values.
+
+## Understanding the Chroots
+In above execution we mounted root directory of host machine as our container's root dir. This practically gives all executables and metadata which our host machine holds. A better approach to this could be creating a pseudo root directory with stripped down executable and thus mounting is as container's root dir.
+
+## Conclusion
+
+
+## Author
+**Akshit Sadana <akshitsadana@gmail.com>**
+
+- Github: [@Akshit8](https://github.com/Akshit8)
+- LinkedIn: [@akshitsadana](https://www.linkedin.com/in/akshit-sadana-b051ab121/)
